@@ -1,21 +1,14 @@
 import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, useForm } from '@inertiajs/inertia-react';
 
-export default function ForgotPassword({ status }) {
+import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import { Button, Card, Form, Input, Space, Typography } from 'antd';
+
+export default function ForgotPassword() {
     const { data, setData, post, processing, errors } = useForm({
         email: '',
     });
 
-    const onHandleChange = (event) => {
-        setData(event.target.name, event.target.value);
-    };
-
-    const submit = (e) => {
-        e.preventDefault();
-
+    const submit = () => {
         post(route('password.email'));
     };
 
@@ -23,32 +16,48 @@ export default function ForgotPassword({ status }) {
         <GuestLayout>
             <Head title="Forgot Password" />
 
-            <div className="mb-4 text-sm text-gray-600">
-                Forgot your password? No problem. Just let us know your email address and we will email you a password
-                reset link that will allow you to choose a new one.
-            </div>
+            <Card className='auth-card'>
+                <div style={{ marginBottom: 30 }}>
+                    <Typography.Title style={{ fontWeight: 400 }} level={4}>Forgot your password?</Typography.Title>
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
-
-            <form onSubmit={submit}>
-                <TextInput
-                    id="password"
-                    type="email"
-                    name="email"
-                    value={data.email}
-                    className="mt-1 block w-full"
-                    isFocused={true}
-                    handleChange={onHandleChange}
-                />
-
-                <InputError message={errors.email} className="mt-2" />
-
-                <div className="flex items-center justify-end mt-4">
-                    <PrimaryButton className="ml-4" processing={processing}>
-                        Email Password Reset Link
-                    </PrimaryButton>
+                    <Typography.Text>No problem. Just let us know your email address and we will email you a password
+                    reset link that will allow you to choose a new one.</Typography.Text>
                 </div>
-            </form>
+
+                <Form
+                    name="basic"
+                    layout='vertical'
+                    initialValues={data}
+                    onFieldsChange={(_, allFields) => {
+                        const fieldData = {};
+                        allFields.forEach(item => {
+                            fieldData[item.name] = item.value
+                        })
+                        setData(fieldData);
+                    }}
+                    onFinish={submit}
+                    autoComplete="off"
+                >
+                    <Form.Item
+                        label="Email"
+                        name="email"
+                        validateStatus={errors.email && 'error'}
+                        help={errors.email}
+                    >
+                        <Input />
+                    </Form.Item>
+
+                    <Space direction='vertical' size={16}>
+                        <Button type="primary" htmlType="submit" loading={processing}>
+                            Email Password Reset Link
+                        </Button>
+                        <Link href={window.route('login')}>
+                            Back to login
+                        </Link>
+                    </Space>
+                </Form>
+
+            </Card>
         </GuestLayout>
     );
 }
