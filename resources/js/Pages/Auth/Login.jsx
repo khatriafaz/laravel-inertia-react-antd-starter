@@ -26,7 +26,7 @@ export default function Login() {
             <Head title="Log in" />
 
             <Card className='auth-card'>
-                <Typography.Title style={{fontWeight: 400, marginBottom: 30 }} level={4}>Login to the application</Typography.Title>
+                <Typography.Title style={{ fontWeight: 400, marginBottom: 30 }} level={4}>Login to the application</Typography.Title>
 
                 <Form
                     name="basic"
@@ -56,6 +56,11 @@ export default function Login() {
                         name="password"
                         validateStatus={errors.password && 'error'}
                         help={errors.password}
+                        extra={
+                            <Link style={{ display: 'inline-block', margin: '5px 0' }} href={window.route('password.request')}>
+                                Forgot password ?
+                            </Link>
+                        }
                     >
                         <Input.Password />
                     </Form.Item>
@@ -72,9 +77,7 @@ export default function Login() {
                             Login
                         </Button>
                         <Link href={window.route('register')}>
-                            <Typography.Link>
-                                Don't have an account ?
-                            </Typography.Link>
+                            Don't have an account ?
                         </Link>
                     </Space>
                 </Form>

@@ -91,9 +91,7 @@ export default function Register() {
                             Register
                         </Button>
                         <Link href={window.route('login')}>
-                            <Typography.Link>
-                                Already have an account ?
-                            </Typography.Link>
+                            Already have an account ?
                         </Link>
                     </Space>
                 </Form>
