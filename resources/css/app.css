@@ -11,3 +11,12 @@
 .auth-card {
     filter: drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
 }
+
+.logo {
+    margin: 20px 0 40px 0;
+    text-align: center;
+}
+
+.logo .logo-text {
+    color: white;
+}
