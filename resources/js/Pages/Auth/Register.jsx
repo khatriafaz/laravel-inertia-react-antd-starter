@@ -33,12 +33,10 @@ export default function Register() {
                     name="basic"
                     layout='vertical'
                     initialValues={data}
-                    onFieldsChange={(_, allFields) => {
-                        const fieldData = {};
-                        allFields.forEach(item => {
-                            fieldData[item.name] = item.value
+                    onFieldsChange={(changedFields) => {
+                        changedFields.forEach(item => {
+                            setData(item.name[0], item.value);
                         })
-                        setData(fieldData);
                     }}
                     onFinish={submit}
                     autoComplete="off"
