@@ -20,3 +20,7 @@
 .logo .logo-text {
     color: white;
 }
+
+.auth-dropdown {
+    cursor: pointer;
+}

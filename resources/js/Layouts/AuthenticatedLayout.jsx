@@ -71,18 +71,20 @@ export default function Authenticated({ header, children }) {
                         </Col>
                         <Col>
                             <Dropdown menu={{ items }} trigger={['click']}>
-                                <a onClick={(e) => e.preventDefault()}>
-                                    <Typography.Text>
+                                <div>
+                                    <Typography.Text className='auth-dropdown'>
                                         <Space size={12}>
                                             <Avatar size={36} icon={<UserOutlined />} />
                                             <div>
-                                                <div>{auth.user.name}</div>
+                                                <div>
+                                                    <Typography.Text strong>{auth.user.name}</Typography.Text>
+                                                </div>
                                                 <div>{auth.user.email}</div>
                                             </div>
                                             <DownOutlined />
                                         </Space>
                                     </Typography.Text>
-                                </a>
+                                </div>
                             </Dropdown>
                         </Col>
                     </Row>
