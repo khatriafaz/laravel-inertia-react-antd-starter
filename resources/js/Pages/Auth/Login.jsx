@@ -1,17 +1,17 @@
 import { useEffect } from 'react';
-import Checkbox from '@/Components/Checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import { Button, Card, Form, Input, Typography, Checkbox } from 'antd';
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
-        remember: '',
+        remember: false,
     });
 
     useEffect(() => {
@@ -30,68 +30,77 @@ export default function Login({ status, canResetPassword }) {
         post(route('login'));
     };
 
+    const onFinish = (values) => {
+        post(route('login'));
+    };
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+    };
+
     return (
         <GuestLayout>
             <Head title="Log in" />
 
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
+            <Card className='auth-card'>
+                <Form
+                    name="basic"
+                    layout='vertical'
+                    initialValues={data}
+                    onFieldsChange={(_, allFields) => {
+                        const fieldData = {};
+                        allFields.forEach(item => {
+                            fieldData[item.name] = item.value
+                        })
+                        setData(fieldData);
+                    }}
+                    onFinish={onFinish}
+                    onFinishFailed={onFinishFailed}
+                    autoComplete="off"
+                >
+                    <Typography.Title level={4}>Login to the application</Typography.Title>
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel forInput="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
+                    <Form.Item
+                        label="Email"
                         name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        isFocused={true}
-                        handleChange={onHandleChange}
-                    />
+                        validateStatus={errors.email && 'error'}
+                        help={errors.email}
+                    >
+                        <Input />
+                    </Form.Item>
 
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel forInput="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
+                    <Form.Item
+                        label="Password"
                         name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        handleChange={onHandleChange}
-                    />
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your password!',
+                            },
+                        ]}
+                    >
+                        <Input.Password />
+                    </Form.Item>
 
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
+                    <Form.Item
+                        name="remember"
+                        valuePropName="checked"
+                    >
+                        <Checkbox>Remember me</Checkbox>
+                    </Form.Item>
 
-                <div className="block mt-4">
-                    <label className="flex items-center">
-                        <Checkbox name="remember" value={data.remember} handleChange={onHandleChange} />
-                        <span className="ml-2 text-sm text-gray-600">Remember me</span>
-                    </label>
-                </div>
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit" loading={processing}>
+                            Login
+                        </Button>
+                    </Form.Item>
+                </Form>
 
-                <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                        >
-                            Forgot your password?
-                        </Link>
-                    )}
-
-                    <PrimaryButton className="ml-4" processing={processing}>
-                        Log in
-                    </PrimaryButton>
-                </div>
-            </form>
+                <Link href={window.route('register')}>
+                    <Typography.Link>
+                        Don't have an account ?
+                    </Typography.Link>
+                </Link>
+            </Card>
         </GuestLayout>
     );
 }

@@ -1,3 +1,13 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+.guest-layout {
+    min-height: 100vh;
+    display: grid;
+    place-content: center;
+}
+
+.guest-content {
+    min-width: 500px;
+}
+
+.auth-card {
+    filter: drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
+}

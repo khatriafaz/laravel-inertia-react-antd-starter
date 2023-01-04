@@ -1,4 +1,5 @@
 import './bootstrap';
+import 'antd/dist/reset.css';
 import '../css/app.css';
 
 import { createRoot } from 'react-dom/client';
