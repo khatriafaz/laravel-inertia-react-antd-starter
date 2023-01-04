@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, useForm } from '@inertiajs/inertia-react';
+
+import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import { Button, Card, Form, Input, Typography, Space } from 'antd';
 
 export default function ResetPassword({ token, email }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -20,13 +18,7 @@ export default function ResetPassword({ token, email }) {
         };
     }, []);
 
-    const onHandleChange = (event) => {
-        setData(event.target.name, event.target.value);
-    };
-
-    const submit = (e) => {
-        e.preventDefault();
-
+    const submit = () => {
         post(route('password.store'));
     };
 
@@ -34,61 +26,62 @@ export default function ResetPassword({ token, email }) {
         <GuestLayout>
             <Head title="Reset Password" />
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel forInput="email" value="Email" />
+            <Card className='auth-card'>
+                <Typography.Title style={{ fontWeight: 400, marginBottom: 30 }} level={4}>Reset Password</Typography.Title>
 
-                    <TextInput
-                        id="email"
-                        type="email"
+                <Form
+                    name="basic"
+                    layout='vertical'
+                    initialValues={{
+                        email: data.email,
+                        password: data.password,
+                        password_confirmation: data.password_confirmation,
+                    }}
+                    onFieldsChange={(changedFields) => {
+                        changedFields.forEach(item => {
+                            setData(item.name[0], item.value)
+                        })
+                    }}
+                    onFinish={submit}
+                    autoComplete="off"
+                >
+                    <Form.Item
+                        label="Email"
                         name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        handleChange={onHandleChange}
-                    />
+                        validateStatus={errors.email && 'error'}
+                        help={errors.email}
+                    >
+                        <Input autoComplete='username' />
+                    </Form.Item>
 
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel forInput="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
+                    <Form.Item
+                        label="Password"
                         name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        isFocused={true}
-                        handleChange={onHandleChange}
-                    />
+                        validateStatus={errors.password && 'error'}
+                        help={errors.password}
+                    >
+                        <Input.Password autoComplete="new-password" />
+                    </Form.Item>
 
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel forInput="password_confirmation" value="Confirm Password" />
-
-                    <TextInput
-                        type="password"
+                    <Form.Item
+                        label="Confirm Password"
                         name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        handleChange={onHandleChange}
-                    />
+                        validateStatus={errors.password_confirmation && 'error'}
+                        help={errors.password_confirmation}
+                    >
+                        <Input.Password />
+                    </Form.Item>
 
-                    <InputError message={errors.password_confirmation} className="mt-2" />
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    <PrimaryButton className="ml-4" processing={processing}>
-                        Reset Password
-                    </PrimaryButton>
-                </div>
-            </form>
+                    <Space size={16}>
+                        <Button type="primary" htmlType="submit" loading={processing}>
+                            Reset password
+                        </Button>
+                        <Link href={window.route('login')}>
+                            Back to login
+                        </Link>
+                    </Space>
+                </Form>
+            </Card>
         </GuestLayout>
     );
 }
