@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
+
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import { Button, Card, Form, Input, Typography, Checkbox, Space } from 'antd';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -20,13 +18,7 @@ export default function Register() {
         };
     }, []);
 
-    const onHandleChange = (event) => {
-        setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
-    };
-
-    const submit = (e) => {
-        e.preventDefault();
-
+    const submit = () => {
         post(route('register'));
     };
 
@@ -34,87 +26,78 @@ export default function Register() {
         <GuestLayout>
             <Head title="Register" />
 
-            <form onSubmit={submit}>
-                <div>
-                    <InputLabel forInput="name" value="Name" />
+            <Card className='auth-card'>
+                <Typography.Title style={{ fontWeight: 400, marginBottom: 30 }} level={4}>Register with Ressy</Typography.Title>
 
-                    <TextInput
-                        id="name"
+                <Form
+                    name="basic"
+                    layout='vertical'
+                    initialValues={data}
+                    onFieldsChange={(_, allFields) => {
+                        const fieldData = {};
+                        allFields.forEach(item => {
+                            fieldData[item.name] = item.value
+                        })
+                        setData(fieldData);
+                    }}
+                    onFinish={submit}
+                    autoComplete="off"
+                >
+                    <Form.Item
+                        label="Name"
                         name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.name} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel forInput="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.email} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel forInput="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.password} className="mt-2" />
-                </div>
-
-                <div className="mt-4">
-                    <InputLabel forInput="password_confirmation" value="Confirm Password" />
-
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        handleChange={onHandleChange}
-                        required
-                    />
-
-                    <InputError message={errors.password_confirmation} className="mt-2" />
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    <Link
-                        href={route('login')}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        validateStatus={errors.name && 'error'}
+                        help={errors.name}
                     >
-                        Already registered?
-                    </Link>
+                        <Input />
+                    </Form.Item>
 
-                    <PrimaryButton className="ml-4" processing={processing}>
-                        Register
-                    </PrimaryButton>
-                </div>
-            </form>
+                    <Form.Item
+                        label="Email"
+                        name="email"
+                        validateStatus={errors.email && 'error'}
+                        help={errors.email}
+                    >
+                        <Input type='email' />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Password"
+                        name="password"
+                        validateStatus={errors.password && 'error'}
+                        help={errors.password}
+                    >
+                        <Input.Password />
+                    </Form.Item>
+
+                    <Form.Item
+                        label="Confirm Password"
+                        name="password_confirmation"
+                        validateStatus={errors.password_confirmation && 'error'}
+                        help={errors.password_confirmation}
+                    >
+                        <Input.Password />
+                    </Form.Item>
+
+                    <Form.Item
+                        name="remember"
+                        valuePropName="checked"
+                    >
+                        <Checkbox>Remember me</Checkbox>
+                    </Form.Item>
+
+                    <Space size={16}>
+                        <Button type="primary" htmlType="submit" loading={processing}>
+                            Register
+                        </Button>
+                        <Link href={window.route('login')}>
+                            <Typography.Link>
+                                Already have an account ?
+                            </Typography.Link>
+                        </Link>
+                    </Space>
+                </Form>
+            </Card>
         </GuestLayout>
     );
 }

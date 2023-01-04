@@ -1,13 +1,10 @@
 import { useEffect } from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/inertia-react';
-import { Button, Card, Form, Input, Typography, Checkbox } from 'antd';
 
-export default function Login({ status, canResetPassword }) {
+import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import { Button, Card, Form, Input, Typography, Checkbox, Space } from 'antd';
+
+export default function Login() {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -20,21 +17,8 @@ export default function Login({ status, canResetPassword }) {
         };
     }, []);
 
-    const onHandleChange = (event) => {
-        setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
-    };
-
-    const submit = (e) => {
-        e.preventDefault();
-
+    const submit = () => {
         post(route('login'));
-    };
-
-    const onFinish = (values) => {
-        post(route('login'));
-    };
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
     };
 
     return (
@@ -42,6 +26,8 @@ export default function Login({ status, canResetPassword }) {
             <Head title="Log in" />
 
             <Card className='auth-card'>
+                <Typography.Title style={{fontWeight: 400, marginBottom: 30 }} level={4}>Login to the application</Typography.Title>
+
                 <Form
                     name="basic"
                     layout='vertical'
@@ -53,12 +39,9 @@ export default function Login({ status, canResetPassword }) {
                         })
                         setData(fieldData);
                     }}
-                    onFinish={onFinish}
-                    onFinishFailed={onFinishFailed}
+                    onFinish={submit}
                     autoComplete="off"
                 >
-                    <Typography.Title level={4}>Login to the application</Typography.Title>
-
                     <Form.Item
                         label="Email"
                         name="email"
@@ -71,12 +54,8 @@ export default function Login({ status, canResetPassword }) {
                     <Form.Item
                         label="Password"
                         name="password"
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input your password!',
-                            },
-                        ]}
+                        validateStatus={errors.password && 'error'}
+                        help={errors.password}
                     >
                         <Input.Password />
                     </Form.Item>
@@ -88,18 +67,18 @@ export default function Login({ status, canResetPassword }) {
                         <Checkbox>Remember me</Checkbox>
                     </Form.Item>
 
-                    <Form.Item>
+                    <Space size={16}>
                         <Button type="primary" htmlType="submit" loading={processing}>
                             Login
                         </Button>
-                    </Form.Item>
+                        <Link href={window.route('register')}>
+                            <Typography.Link>
+                                Don't have an account ?
+                            </Typography.Link>
+                        </Link>
+                    </Space>
                 </Form>
 
-                <Link href={window.route('register')}>
-                    <Typography.Link>
-                        Don't have an account ?
-                    </Typography.Link>
-                </Link>
             </Card>
         </GuestLayout>
     );
