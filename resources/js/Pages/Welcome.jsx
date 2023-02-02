@@ -7,7 +7,7 @@ export default function Welcome(props) {
             <Head title="Welcome" />
                 <Row justify="center">
                     <Col>
-                        <Typography.Title level={1}>Welcome to Ressy App</Typography.Title>
+                        <Typography.Title level={1}>Welcome to Laravel Inertia Starter App</Typography.Title>
                         <Link href={window.route('login')}>
                             <Button type="primary">Login</Button>
                         </Link>

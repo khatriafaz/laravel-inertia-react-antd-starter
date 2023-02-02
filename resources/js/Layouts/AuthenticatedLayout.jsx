@@ -45,7 +45,7 @@ export default function Authenticated({ header, children }) {
         <Layout style={{ minHeight: '100vh' }}>
             <Sider trigger={null} collapsible collapsed={collapsed}>
                 <div className="logo">
-                    <Typography.Title className='logo-text' level={3}>Ressy App</Typography.Title>
+                    <Typography.Title className='logo-text' level={3}>Laravel Inertia Starter App</Typography.Title>
                 </div>
                 <Menu
                     theme="dark"

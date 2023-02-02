@@ -27,7 +27,7 @@ export default function Register() {
             <Head title="Register" />
 
             <Card className='auth-card'>
-                <Typography.Title style={{ fontWeight: 400, marginBottom: 30 }} level={4}>Register with Ressy</Typography.Title>
+                <Typography.Title style={{ fontWeight: 400, marginBottom: 30 }} level={4}>Register with Laravel Inertia Starter</Typography.Title>
 
                 <Form
                     name="basic"
