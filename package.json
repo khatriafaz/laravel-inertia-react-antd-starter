@@ -17,6 +17,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@headlessui/react": "^1.7.11",
         "antd": "^5.1.2",
         "antd-css-utilities": "^1.0.3"
     }

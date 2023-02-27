@@ -29,3 +29,7 @@ body {
 .auth-dropdown {
     cursor: pointer;
 }
+
+.app-layout {
+    min-height: 100vh;
+}

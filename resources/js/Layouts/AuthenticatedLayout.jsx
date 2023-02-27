@@ -14,9 +14,18 @@ const { Header, Sider, Content } = Layout;
 
 const items = [
     {
+        key: 'profile',
+        label: (
+            <Link href={window.route('profile.edit')}>
+                My profile
+            </Link>
+        ),
+        icon: <UserOutlined />,
+    },
+    {
         key: 'logout',
         label: (
-            <Link href={window.route('logout')} method='post'>
+            <Link href={window.route('logout')} method='post' as='div'>
                 Logout
             </Link>
         ),
@@ -42,7 +51,7 @@ export default function Authenticated({ header, children }) {
     } = theme.useToken();
 
     return (
-        <Layout style={{ minHeight: '100vh' }}>
+        <Layout className='app-layout'>
             <Sider trigger={null} collapsible collapsed={collapsed}>
                 <div className="logo">
                     <Typography.Title className='logo-text' level={3}>{collapsed ? 'LISA' : 'Laravel Inertia Starter App'}</Typography.Title>
@@ -55,7 +64,9 @@ export default function Authenticated({ header, children }) {
                         {
                             key: 'dashboard',
                             icon: <UserOutlined />,
-                            label: 'Dashboard',
+                            label: <Link href={window.route('dashboard')}>
+                                        Dashboard
+                                   </Link>,
                         },
                     ]}
                 />
