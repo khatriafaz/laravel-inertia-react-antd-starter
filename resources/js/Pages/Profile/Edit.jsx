@@ -5,11 +5,9 @@ import UpdateProfileInformationForm from './Partials/UpdateProfileInformationFor
 import { Head } from '@inertiajs/inertia-react';
 import { Col, Row, Typography } from 'antd';
 
-export default function Edit({ auth, mustVerifyEmail, status }) {
+function Edit({ auth, mustVerifyEmail, status }) {
     return (
-        <AuthenticatedLayout
-            auth={auth}
-        >
+        <>
             <Head title="Profile" />
 
             <Typography.Title level={2}>Profile</Typography.Title>
@@ -32,6 +30,10 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
                     </Col>
                 </Row>
             </div>
-        </AuthenticatedLayout>
+        </>
     );
 }
+
+Edit.layout = page => <AuthenticatedLayout children={page} />
+
+export default Edit;
