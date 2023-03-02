@@ -1,7 +1,7 @@
 import { Link, Head } from '@inertiajs/inertia-react';
-import { Button, Col, Layout, Row, Space, Typography } from 'antd';
+import { Button, Col, Row, Typography } from 'antd';
 
-export default function Welcome(props) {
+export default function Welcome() {
     return (
         <>
             <Head title="Welcome" />

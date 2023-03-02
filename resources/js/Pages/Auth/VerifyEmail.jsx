@@ -2,7 +2,7 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 import { Alert, Button, Card, Col, Form, Row, Typography } from 'antd';
 
-export default function VerifyEmail({ status }) {
+function VerifyEmail({ status }) {
     const { post, processing } = useForm();
 
     const submit = () => {
@@ -56,3 +56,7 @@ export default function VerifyEmail({ status }) {
         </GuestLayout>
     );
 }
+
+VerifyEmail.layout = page => <GuestLayout children={page} />
+
+export default VerifyEmail;

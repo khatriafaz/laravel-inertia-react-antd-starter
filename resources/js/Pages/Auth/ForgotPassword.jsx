@@ -3,7 +3,7 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 import { Button, Card, Form, Input, Space, Typography } from 'antd';
 
-export default function ForgotPassword() {
+function ForgotPassword() {
     const { data, setData, post, processing, errors } = useForm({
         email: '',
     });
@@ -13,7 +13,7 @@ export default function ForgotPassword() {
     };
 
     return (
-        <GuestLayout>
+        <>
             <Head title="Forgot Password" />
 
             <Card className='auth-card'>
@@ -56,6 +56,10 @@ export default function ForgotPassword() {
                 </Form>
 
             </Card>
-        </GuestLayout>
+        </>
     );
 }
+
+ForgotPassword.layout = page => <GuestLayout children={page} />;
+
+export default ForgotPassword;

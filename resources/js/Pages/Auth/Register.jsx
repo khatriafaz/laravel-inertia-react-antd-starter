@@ -4,7 +4,7 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 import { Button, Card, Form, Input, Typography, Checkbox, Space } from 'antd';
 
-export default function Register() {
+function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
@@ -23,7 +23,7 @@ export default function Register() {
     };
 
     return (
-        <GuestLayout>
+        <>
             <Head title="Register" />
 
             <Card className='auth-card'>
@@ -94,6 +94,10 @@ export default function Register() {
                     </Space>
                 </Form>
             </Card>
-        </GuestLayout>
+        </>
     );
 }
+
+Register.layout = page => <GuestLayout children={page} />
+
+export default Register;

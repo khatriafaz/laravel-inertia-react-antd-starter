@@ -3,7 +3,7 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, useForm } from '@inertiajs/inertia-react';
 import { Button, Card, Form, Input, Typography } from 'antd';
 
-export default function ConfirmPassword() {
+function ConfirmPassword() {
     const { data, setData, post, processing, errors, reset } = useForm({
         password: '',
     });
@@ -19,7 +19,7 @@ export default function ConfirmPassword() {
     };
 
     return (
-        <GuestLayout showTitle={false}>
+        <>
             <Head title="Confirm Password" />
 
             <Card className='auth-card'>
@@ -57,6 +57,10 @@ export default function ConfirmPassword() {
                     </Button>
                 </Form>
             </Card>
-        </GuestLayout>
+        </>
     );
 }
+
+ConfirmPassword.layout = page => <GuestLayout children={page} showTitle={false} />
+
+export default ConfirmPassword;

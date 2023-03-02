@@ -4,7 +4,7 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 import { Button, Card, Form, Input, Typography, Checkbox, Space } from 'antd';
 
-export default function Login() {
+function Login() {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -22,7 +22,7 @@ export default function Login() {
     };
 
     return (
-        <GuestLayout>
+        <>
             <Head title="Log in" />
 
             <Card className='auth-card'>
@@ -81,6 +81,10 @@ export default function Login() {
                 </Form>
 
             </Card>
-        </GuestLayout>
+        </>
     );
 }
+
+Login.layout = page => <GuestLayout children={page} />
+
+export default Login;

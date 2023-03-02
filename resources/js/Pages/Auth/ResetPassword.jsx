@@ -4,7 +4,7 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 import { Button, Card, Form, Input, Typography, Space } from 'antd';
 
-export default function ResetPassword({ token, email }) {
+function ResetPassword({ token, email }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         token: token,
         email: email,
@@ -23,7 +23,7 @@ export default function ResetPassword({ token, email }) {
     };
 
     return (
-        <GuestLayout>
+        <>
             <Head title="Reset Password" />
 
             <Card className='auth-card'>
@@ -82,6 +82,10 @@ export default function ResetPassword({ token, email }) {
                     </Space>
                 </Form>
             </Card>
-        </GuestLayout>
+        </>
     );
 }
+
+ResetPassword.layout = page = <GuestLayout children={page} />
+
+export default ResetPassword;
