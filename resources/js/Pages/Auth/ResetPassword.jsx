@@ -86,6 +86,6 @@ function ResetPassword({ token, email }) {
     );
 }
 
-ResetPassword.layout = page = <GuestLayout children={page} />
+ResetPassword.layout = page => <GuestLayout children={page} />
 
 export default ResetPassword;
